@@ -40,4 +40,13 @@ with open('02.input', 'r') as file:
             print(line)
             valid_count += 1
 
+print(f"Number of valid sequences: {valid_count}")# Read the file and count valid sequences
+valid_count = 0
+with open('02.input', 'r') as file:
+    for line in file:
+        line = line.strip()
+        if check_sequence(line):
+            print(line)
+            valid_count += 1
+
 print(f"Number of valid sequences: {valid_count}")
