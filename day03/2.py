@@ -12,7 +12,7 @@ def process_file(filename):
     # Regex patterns
     mul_pattern = r'mul\(([1-9]\d{0,2}),([1-9]\d{0,2})\)'
     do_pattern = r'do\(\)'
-    dont_pattern = r'dont\(\)'
+    dont_pattern = r'don\'t\(\)'
     
     # Track position as we process the string
     pos = 0
