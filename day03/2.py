@@ -1,3 +1,8 @@
+#PROMPT:
+# Now I want to create a new file named 2,py and continue. The problem remains largely the same, but the difference is now that we are going to consider the exact matches of "do()" and "dont()" as well. What this does, is create a sort
+#  of toggle on whether the multiplication should be added to the final sum of products. You can set this toggle to be true from the start. Now anytime we face a "do()", we want to set the toggle to true, and set that toggle to false when "dont
+# ()" is encountered. Now when we find a multiplication match, we can check whether or not the toggle is true or false and only calculcate the product and add it to the sum if the toggle is set to true.
+
 import re
 import sys
 
