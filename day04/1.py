@@ -73,4 +73,8 @@ def count_xmas_patterns(filename):
     return total
 
 if __name__ == "__main__":
-    count_xmas_patterns("test.input")
+    import sys
+    if len(sys.argv) != 2:
+        print("Usage: python 1.py <input_file>")
+        sys.exit(1)
+    count_xmas_patterns(sys.argv[1])
