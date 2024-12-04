@@ -2,13 +2,20 @@ def read_grid(filename):
     with open(filename) as f:
         return [line.strip() for line in f.readlines()]
 
+def count_overlapping(text, pattern):
+    count = 0
+    for i in range(len(text) - len(pattern) + 1):
+        if text[i:i+len(pattern)] == pattern:
+            count += 1
+    return count
+
 def check_horizontal(grid):
     count = 0
     for row in grid:
         # Left to right
-        count += row.count("XMAS")
+        count += count_overlapping(row, "XMAS")
         # Right to left
-        count += row.count("SAMX")
+        count += count_overlapping(row, "SAMX")
     return count
 
 def check_vertical(grid):
@@ -19,9 +26,9 @@ def check_vertical(grid):
     for col in range(width):
         vertical = ''.join(grid[row][col] for row in range(height))
         # Top to bottom
-        count += vertical.count("XMAS")
+        count += count_overlapping(vertical, "XMAS")
         # Bottom to top
-        count += vertical.count("SAMX")
+        count += count_overlapping(vertical, "SAMX")
     return count
 
 def check_diagonal(grid):
