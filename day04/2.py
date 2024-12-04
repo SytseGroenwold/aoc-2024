@@ -1,3 +1,9 @@
+# PROMPT:
+# we're continuing with the second part of the puzzle. let's make a new 2.py file and work in there. Instead of finding "XMAS", we now have to find "MAS" in an "X" pattern. One way to achieve this is by thinking of a 3x3 grid, and number each
+#  cell from left to right and top to bottom 1-9. cell number 5 will always hold "A". Cell 1 can hold either "M" or "S", but cell 9 will always hold the letter which cell 1 does not hold. This same rule applies to cell 3 and 7. Can you make a r
+# epresentation of this pattern in the chat output before you start making the code so I see it as part of my review of your code implementation? You can implement this code in a few file named 2.py.
+
+
 def read_grid(filename):
     with open(filename) as f:
         return [line.strip() for line in f.readlines()]

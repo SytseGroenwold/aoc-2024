@@ -1,3 +1,8 @@
+# PROMPT:
+#  > I want to write a script in 1.py that goes through input. lets start with test.input. I want to find all instances of "XMAS" inside this grid of letters. I want to count all instacnes of "XMAS" that are horizontal, vertical or diagonal. Fro
+#  horizontal I want to check it both left to right and right to left, for vertical up to down and down to up and also for the diagnocal I want to check both directions. If done right, the test.input should return a total of 18 instances.
+#  > it looks like test.input works fine. But 1.input returns 18 XMAS as well and that is way too little. By only searching from left to right horizontal matches manually, I already find 221 matches. What went wrong?
+
 def read_grid(filename):
     with open(filename) as f:
         return [line.strip() for line in f.readlines()]
