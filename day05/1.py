@@ -45,10 +45,27 @@ def main():
     filename = sys.argv[1]
     rules, sequences = parse_input(filename)
     
-    # Check each sequence against all rules
+    # Check each sequence against all rules and collect middle numbers
+    middle_sum = 0
     for sequence in sequences:
         if check_sequence(sequence, rules):
+            # Print the valid sequence
             print(','.join(map(str, sequence)))
+            
+            # Calculate middle number
+            length = len(sequence)
+            if length % 2 == 1:
+                # Odd length - take middle number
+                middle = sequence[length // 2]
+            else:
+                # Even length - take average of two middle numbers
+                mid_right = length // 2
+                mid_left = mid_right - 1
+                middle = (sequence[mid_left] + sequence[mid_right]) / 2
+            
+            middle_sum += middle
+    
+    print(f"\nSum of middle numbers: {middle_sum}")
 
 if __name__ == "__main__":
     main()
