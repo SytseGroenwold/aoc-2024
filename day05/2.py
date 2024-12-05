@@ -39,11 +39,47 @@ def check_sequence(sequence, rules):
     return True
 
 def find_valid_arrangement(sequence, rules):
-    # Try all possible permutations of the sequence
-    for perm in permutations(sequence):
-        if check_sequence(perm, rules):
-            return perm
-    return None
+    # Convert rules into a directed graph of requirements
+    requirements = {}
+    for x, y in rules:
+        if x in sequence and y in sequence:
+            if x not in requirements:
+                requirements[x] = set()
+            requirements[x].add(y)
+    
+    # Get all numbers in the sequence
+    numbers = set(sequence)
+    
+    # Find numbers that have no prerequisites
+    def get_available():
+        result = []
+        for num in numbers:
+            # Check if this number is required to come after any other numbers
+            is_dependent = any(num in reqs for reqs in requirements.values())
+            if not is_dependent:
+                result.append(num)
+        return result
+    
+    # Build valid arrangement
+    result = []
+    while numbers:
+        # Get numbers that can be added next
+        available = get_available()
+        if not available:
+            # If no numbers are available but we haven't used all numbers,
+            # there must be a cycle in the requirements
+            return None
+        
+        # Add the smallest available number
+        num = min(available)
+        result.append(num)
+        numbers.remove(num)
+        
+        # Remove this number from requirements
+        if num in requirements:
+            del requirements[num]
+    
+    return result
 
 def main():
     if len(sys.argv) != 2:
