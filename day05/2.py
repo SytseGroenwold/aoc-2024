@@ -1,3 +1,8 @@
+#PROMPT:
+# > create a new file 2.py. We'll be doing almost the same thing, but first we will only consider the lines that are faulty and did not adhere to the rules. Also for each of these lines, I want to shuffle the numbers around so that the lines do
+#  adhere to the rules.
+# > something appears to go wrong, when I run the python command locally it appears to get stuck. I see one invalid sequence printed out, but then it is stuck and does nothing and I have to keyboardinterrupt it
+
 import sys
 from itertools import permutations
 

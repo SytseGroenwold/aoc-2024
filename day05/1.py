@@ -1,3 +1,9 @@
+# PROMPT:
+# > I want to write a python script that takes either 1.input or test.input as an input via passed args on the command line. Any file input first needs to be sorted into two sections: first there is a set of rules, denoted as X|Y, where X and Y
+#  are integers. Then there is a set of lines that hold several integers separated by commas. I want to iterate over the set of lines. For each line, I want to check all of the rules X|Y. I want you to print out all lines that adhere to these r
+# ules. The rule X|Y states that X should appear before Y in the line. All the rules should be checked against each integer inside of the line.
+# > Now I want to create a sum of all the middle numbers of the lines that adhere to the rules
+
 import sys
 
 def parse_input(filename):
