@@ -81,7 +81,7 @@ def find_loop_positions(grid: List[List[str]]) -> int:
                 
                 # Check if this creates a loop
                 if detect_loop(test_grid, start_y, start_x, start_dir):
-                    loop_sum += (y * len(grid[0]) + x)
+                    loop_sum += 1
     
     return loop_sum
 
