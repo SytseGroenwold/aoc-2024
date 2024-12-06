@@ -75,13 +75,17 @@ def find_loop_positions(grid: List[List[str]]) -> int:
     for y in range(len(grid)):
         for x in range(len(grid[0])):
             if original_grid[y][x] == '.':
+                print(f"Testing position ({y}, {x})...", end=" ")
                 # Create a new grid with an object at this position
                 test_grid = deepcopy(original_grid)
                 test_grid[y][x] = '#'
                 
                 # Check if this creates a loop
                 if detect_loop(test_grid, start_y, start_x, start_dir):
+                    print("creates loop!")
                     loop_sum += 1
+                else:
+                    print("no loop")
     
     return loop_sum
 
