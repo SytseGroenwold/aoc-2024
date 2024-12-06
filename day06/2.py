@@ -1,3 +1,11 @@
+# PROMPT:
+
+# > we're going to create a new file 2.py for the next script. We're going to take the same type of inputs and the nature of the script hasn't changed much. But we are no longer interested in counting the marked positions. Instead we are going
+# to try to add an object in every possible open position (dots) and see if that causes the person following the rules to get stuck in a loop, meaning it keeps repeating a path and never leaves the map again. If a change of a dot into an object
+#  does cause the person to be stuck in a loop, we're going to add it to a sum and print it at the end of the script.
+# > I forgot to mention that when running the script with test.input, the answer should be 6. Your current answer of 477 is way more and not even possible, because the test.input file only has 91 dots, which should be the maximum number.
+# > Please add a print out of each attempt so I know the program hasn't crashed/got stuck
+
 import sys
 from typing import List, Tuple, Set
 from copy import deepcopy

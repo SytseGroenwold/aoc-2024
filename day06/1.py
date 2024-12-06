@@ -1,3 +1,10 @@
+# PROMPT:
+# > I want to make a python script that takes a CLI argument as its input file, which will be test.input or 1.input. The python script should read the input file. The input is a map. Dots are open spaces, pound signs are objects and the arrow (
+# either ^, >, < or v) is a person walking in that room. The script should make the person walk around following two rules: 1) if there is an empty space in front of them, they move one place forward and 2) if there is an object in front of the
+# m (#), right around 90 degrees to the right (this means ^ becomes >, > becomes v  etc). When the person has visited a spot (including its starting spot), the space gets marked with a X to indicate the place has been visited. The person can st
+# ill move through this spot after having visited it. Eventually the person will walk off the map, which is the end of the puzzle. I want to see the final map with all its markings and a count of the marked positions (X's) on the map.
+
+
 import sys
 from typing import List, Tuple, Set
 
