@@ -35,7 +35,7 @@ def is_valid_pos(y: int, x: int, grid: List[List[str]]) -> bool:
 
 def walk_map(grid: List[List[str]]) -> Tuple[List[List[str]], int]:
     """Simulate walking through the map and return final state and count of visited positions."""
-    y, x, direction = find_start(y_pos, x_pos, curr_dir = find_start(grid))
+    y, x, direction = find_start(grid)
     visited = {(y, x)}
     
     while True:
