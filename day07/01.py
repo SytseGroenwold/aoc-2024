@@ -69,6 +69,7 @@ def main():
         for line in f:
             target, numbers = parse_line(line)
             if try_combinations(target, numbers):
+                print(f"Found solution for target {target} with numbers {numbers}")
                 total += target
 
     print(f"Total sum of valid solutions: {total}")
