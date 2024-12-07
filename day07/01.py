@@ -3,22 +3,55 @@ from itertools import combinations
 import operator
 from typing import List, Tuple
 
+def try_operations(numbers: List[int], target: int) -> bool:
+    """Try all possible combinations of operations between numbers"""
+    if len(numbers) == 1:
+        return numbers[0] == target
+    
+    for i in range(1, len(numbers)):
+        left = numbers[:i]
+        right = numbers[i:]
+        
+        # Try all possible results from left side
+        left_results = get_all_results(left)
+        right_results = get_all_results(right)
+        
+        # Check if any combination of results equals target
+        for l in left_results:
+            for r in right_results:
+                if l + r == target or l * r == target:
+                    return True
+    
+    return False
+
+def get_all_results(numbers: List[int]) -> List[int]:
+    """Get all possible results from combining numbers with + and *"""
+    if len(numbers) == 1:
+        return [numbers[0]]
+    
+    results = []
+    for i in range(1, len(numbers)):
+        left = numbers[:i]
+        right = numbers[i:]
+        
+        left_results = get_all_results(left)
+        right_results = get_all_results(right)
+        
+        for l in left_results:
+            for r in right_results:
+                results.append(l + r)
+                results.append(l * r)
+    
+    return results
+
 def try_combinations(target: int, numbers: List[int]) -> bool:
     """Try all possible combinations of numbers with + and * operations"""
-    ops = [operator.add, operator.mul]
-    
     # Try different lengths of combinations
     for length in range(2, len(numbers) + 1):
         # Get all possible combinations of numbers of current length
         for combo in combinations(numbers, length):
-            # Try all possible combinations of operations
-            stack = [combo[0]]
-            for num in combo[1:]:
-                for op in ops:
-                    new_result = op(stack[-1], num)
-                    if new_result == target:
-                        return True
-                    stack.append(new_result)
+            if try_operations(list(combo), target):
+                return True
     return False
 
 def parse_line(line: str) -> Tuple[int, List[int]]:
