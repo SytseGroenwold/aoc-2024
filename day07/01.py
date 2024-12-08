@@ -4,9 +4,10 @@ import operator
 from typing import List, Tuple
 
 def try_operations(numbers: List[int], target: int) -> bool:
-    """Try all possible combinations of + and * between numbers in order"""
+    """Try all possible combinations of operations between numbers"""
     if len(numbers) == 1:
         return numbers[0] == target
+<<<<<<< HEAD
         
     def evaluate(ops: List[str]) -> int:
         # Evaluate strictly left-to-right
@@ -18,24 +19,54 @@ def try_operations(numbers: List[int], target: int) -> bool:
                 result *= numbers[i + 1]
             
         return result
+=======
+>>>>>>> parent of c699797 (refactor: Simplify number operations by using binary operator generation)
     
-    # Try all possible combinations of + and *
-    n = len(numbers) - 1  # number of operators needed
-    for i in range(2 ** n):  # each bit represents + (0) or * (1)
-        ops = []
-        for j in range(n):
-            if i & (1 << j):
-                ops.append('*')
-            else:
-                ops.append('+')
-        if evaluate(ops) == target:
-            return True
-            
+    for i in range(1, len(numbers)):
+        left = numbers[:i]
+        right = numbers[i:]
+        
+        # Try all possible results from left side
+        left_results = get_all_results(left)
+        right_results = get_all_results(right)
+        
+        # Check if any combination of results equals target
+        for l in left_results:
+            for r in right_results:
+                if l + r == target or l * r == target:
+                    return True
+    
     return False
 
+def get_all_results(numbers: List[int]) -> List[int]:
+    """Get all possible results from combining numbers with + and *"""
+    if len(numbers) == 1:
+        return [numbers[0]]
+    
+    results = []
+    for i in range(1, len(numbers)):
+        left = numbers[:i]
+        right = numbers[i:]
+        
+        left_results = get_all_results(left)
+        right_results = get_all_results(right)
+        
+        for l in left_results:
+            for r in right_results:
+                results.append(l + r)
+                results.append(l * r)
+    
+    return results
+
 def try_combinations(target: int, numbers: List[int]) -> bool:
-    """Try all possible operations between numbers"""
-    return try_operations(numbers, target)
+    """Try all possible combinations of numbers with + and * operations"""
+    # Try different lengths of combinations
+    for length in range(2, len(numbers) + 1):
+        # Get all possible combinations of numbers of current length
+        for combo in combinations(numbers, length):
+            if try_operations(list(combo), target):
+                return True
+    return False
 
 def parse_line(line: str) -> Tuple[int, List[int]]:
     """Parse a line into target number and list of integers"""
