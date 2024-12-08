@@ -57,7 +57,7 @@ def try_combinations(target: int, numbers: List[int]) -> bool:
 
 def parse_line(line: str) -> Tuple[int, List[int]]:
     """Parse a line into target number and list of integers"""
-    target, numbers = line.strip().split(': ')
+    target, numbers = line.strip().rstrip('`').split(': ')
     return int(target), [int(x) for x in numbers.split()]
 
 def main():
