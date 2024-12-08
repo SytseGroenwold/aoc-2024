@@ -9,21 +9,21 @@ def try_operations(numbers: List[int], target: int) -> bool:
         return numbers[0] == target
         
     def evaluate(ops: List[str]) -> int:
-        # First handle multiplications
+        # First pass: handle multiplications
         nums = list(numbers)
-        new_nums = [nums[0]]
-        new_ops = []
+        mul_nums = [nums[0]]
+        add_ops = []
         
         for i, op in enumerate(ops):
             if op == '*':
-                new_nums[-1] *= nums[i + 1]
-            else:
-                new_nums.append(nums[i + 1])
-                new_ops.append(op)
+                mul_nums[-1] *= nums[i + 1]
+            else:  # op == '+'
+                mul_nums.append(nums[i + 1])
+                add_ops.append(op)
         
-        # Then handle additions
-        result = new_nums[0]
-        for i, num in enumerate(new_nums[1:]):
+        # Second pass: handle additions
+        result = mul_nums[0]
+        for num in mul_nums[1:]:
             result += num
             
         return result

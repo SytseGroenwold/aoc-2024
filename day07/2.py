@@ -10,28 +10,35 @@ def try_operations(numbers: List[int], target: int) -> bool:
         
     def evaluate(ops: List[str]) -> int:
         # First pass: handle || operations to combine numbers
-        combined_nums = [str(numbers[0])]
+        nums = [str(numbers[0])]
+        new_ops = []
+        
         for i, op in enumerate(ops):
             if op == '||':
-                combined_nums[-1] = combined_nums[-1] + str(numbers[i + 1])
+                nums[-1] = nums[-1] + str(numbers[i + 1])
             else:
-                combined_nums.append(str(numbers[i + 1]))
+                nums.append(str(numbers[i + 1]))
+                new_ops.append(op)
         
-        # Convert back to integers
-        nums = [int(x) for x in combined_nums]
+        # Convert strings to integers
+        nums = [int(x) for x in nums]
         
-        # Second pass: handle + and * operations
-        result = nums[0]
-        op_idx = 0
-        for i in range(1, len(nums)):
-            while op_idx < len(ops) and ops[op_idx] == '||':
-                op_idx += 1
-            if op_idx < len(ops):
-                if ops[op_idx] == '+':
-                    result += nums[i]
-                else:  # op == '*'
-                    result *= nums[i]
-                op_idx += 1
+        # Second pass: handle multiplications
+        mul_nums = [nums[0]]
+        add_ops = []
+        
+        for i, op in enumerate(new_ops):
+            if op == '*':
+                mul_nums[-1] *= nums[i + 1]
+            else:  # op == '+'
+                mul_nums.append(nums[i + 1])
+                add_ops.append(op)
+        
+        # Final pass: handle additions
+        result = mul_nums[0]
+        for num in mul_nums[1:]:
+            result += num
+            
         return result
     
     # Try all possible combinations of +, * and ||
