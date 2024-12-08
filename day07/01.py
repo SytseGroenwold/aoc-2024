@@ -9,22 +9,13 @@ def try_operations(numbers: List[int], target: int) -> bool:
         return numbers[0] == target
         
     def evaluate(ops: List[str]) -> int:
-        # First pass: handle multiplications
-        nums = list(numbers)
-        mul_nums = [nums[0]]
-        add_ops = []
-        
+        # Evaluate strictly left-to-right
+        result = numbers[0]
         for i, op in enumerate(ops):
-            if op == '*':
-                mul_nums[-1] *= nums[i + 1]
-            else:  # op == '+'
-                mul_nums.append(nums[i + 1])
-                add_ops.append(op)
-        
-        # Second pass: handle additions
-        result = mul_nums[0]
-        for num in mul_nums[1:]:
-            result += num
+            if op == '+':
+                result += numbers[i + 1]
+            else:  # op == '*'
+                result *= numbers[i + 1]
             
         return result
     
