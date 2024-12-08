@@ -9,28 +9,15 @@ def try_operations(numbers: List[int], target: int) -> bool:
         return numbers[0] == target
         
     def evaluate(ops: List[str]) -> int:
-        # First handle || operations to combine numbers
-        nums = [str(numbers[0])]
-        new_ops = []
-        
+        result = numbers[0]
         for i, op in enumerate(ops):
-            if op == '||':
-                nums[-1] = nums[-1] + str(numbers[i + 1])
-            else:
-                nums.append(str(numbers[i + 1]))
-                new_ops.append(op)
-        
-        # Convert strings to integers
-        nums = [int(x) for x in nums]
-        
-        # Then evaluate remaining operations strictly left-to-right
-        result = nums[0]
-        for i, op in enumerate(new_ops):
             if op == '+':
-                result += nums[i + 1]
-            else:  # op == '*'
-                result *= nums[i + 1]
-            
+                result += numbers[i + 1]
+            elif op == '*':
+                result *= numbers[i + 1]
+            else:  # op == '||'
+                # Convert both numbers to strings, concatenate, then back to int
+                result = int(str(result) + str(numbers[i + 1]))
         return result
     
     # Try all possible combinations of +, * and ||
@@ -38,10 +25,18 @@ def try_operations(numbers: List[int], target: int) -> bool:
     for i in range(3 ** n):  # each position can be +, * or ||
         ops = []
         num = i
+<<<<<<< HEAD
         for _ in range(n):
             if num % 3 == 0:
                 ops.append('+')
             elif num % 3 == 1:
+=======
+        for j in range(n):
+            op_choice = num % 3
+            if op_choice == 0:
+                ops.append('+')
+            elif op_choice == 1:
+>>>>>>> 7.2
                 ops.append('*')
             else:
                 ops.append('||')
@@ -57,7 +52,11 @@ def try_combinations(target: int, numbers: List[int]) -> bool:
 
 def parse_line(line: str) -> Tuple[int, List[int]]:
     """Parse a line into target number and list of integers"""
+<<<<<<< HEAD
     target, numbers = line.strip().rstrip('`').split(': ')
+=======
+    target, numbers = line.strip().split(': ')
+>>>>>>> 7.2
     return int(target), [int(x) for x in numbers.split()]
 
 def main():
