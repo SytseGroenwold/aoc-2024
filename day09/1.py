@@ -27,6 +27,9 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     for file_id, length in blocks:
         flat.extend([file_id] * length)
     
+    print(f"Initial disk state: {flat}")
+    moves = 0
+    
     # Keep moving files until no more moves are possible
     while True:
         moved = False
@@ -37,13 +40,17 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
                 for j in range(len(flat)):
                     if flat[j] == -1:  # Found free space
                         # Move the file block
+                        print(f"Moving file {flat[i]} from position {i} to position {j}")
                         flat[j] = flat[i]
                         flat[i] = -1
                         moved = True
+                        moves += 1
+                        print(f"Disk state after move {moves}: {flat}")
                         break
                 if moved:
                     break
         if not moved:
+            print(f"Finished after {moves} moves")
             break
     
     return flat
