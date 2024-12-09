@@ -1,3 +1,10 @@
+# # PROMPT:
+# > We're writing a script in 1.py with either test.input or 1.input as input file, passed along as CLI arguments for the py script. The input can be seen as a map. First I want to create a list of all the different characters in the input. Onl
+# y consider digits, lowercase and uppercase characters. We call each of these a frequency. Then I want to gather for each individual frequencies a collection of the coordinates that each occurance of the frequency can be found. Then we need to
+#  check for each possible combination of occurances of the same frequencies their antinodes. An antinode can be calculated by doulbing the distance between two occurances. so if the first has coordinates 4,5 and the other 7,6, there would be r
+# wo antinodes at 1,4 and the other at 10,7. They are therefore calculated by taking the absolute differnce between the coordinates and then for one antinode adding them, where for the other antinode we substract them. I want these antinodes to
+#  be stored all together in one big list. Then finally we can check how many unique entries we have inside this list. Then we count the unique number of antinodes, but we do not consider any antinode that falls outside of our original grid.
+
 import sys
 from typing import List, Tuple, Dict, Set
 from collections import defaultdict

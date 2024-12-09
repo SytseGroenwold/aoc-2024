@@ -1,3 +1,9 @@
+# PROMPTS:
+# > Looks good. Now create a new file "2.py" and copy over the initial script, but with some small changes. Instead of only creating two antinodes, any two occurances of one frequency create the first two antinodes in the same manner, but it co
+# ntinues to create antinodes using the same calculation for as long as the antinodes can fit inside the grid. Recalculate the number of unique antinodes inside our new list of antinodes. We also consider the occurances of all frequencies origi
+# nal position an antinode location.
+# > Run python day08/2.py day08/1.input and analyse the error
+
 import sys
 from typing import List, Tuple, Dict, Set
 from collections import defaultdict
