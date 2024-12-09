@@ -1,3 +1,7 @@
+# PROMPT:
+# > Take a look at 01.py. I want to do do something similar in 2.py. First of all it is important to see that the order of the operations does not follow the usual mathematical order. In this script, the order has to be from left to right alway
+# s, not * over +. We are also introducing a new operator "||". What it does, is concat two numbers to make one number. An example: 12 || 34 = 1234.
+
 import sys
 from itertools import combinations
 import operator

@@ -1,3 +1,11 @@
+# PROMPT
+# > make a python script in file 01.py. It should take either 1.input or test.input as an argument. The input needs to be considered per line. Every line starts with "int:" which is the solution of a possible equation of the integers after it.
+# Of all the integers following the possible solution, check any combination with addition or multiplication to end up at the solution. Print the lines that have a solution and sum the answers of all the possible solutions. Test whether the pro
+# gram works with test.input and the final answer being 3749.
+# > This took waaay too long. Reconsider what you are doing. I think that for every line you are considering every permutation of numbers, but I forgot to mention that the numbers are already in order and should stay that way. So you just have
+# to check all possible placements of either + or * between each numbers and see if that results in the solution at the start of the line
+
+
 import sys
 from itertools import combinations
 import operator
@@ -7,20 +15,17 @@ def try_operations(numbers: List[int], target: int) -> bool:
     """Try all possible combinations of operations between numbers"""
     if len(numbers) == 1:
         return numbers[0] == target
-<<<<<<< HEAD
         
-    def evaluate(ops: List[str]) -> int:
-        # Evaluate strictly left-to-right
-        result = numbers[0]
-        for i, op in enumerate(ops):
-            if op == '+':
-                result += numbers[i + 1]
-            else:  # op == '*'
-                result *= numbers[i + 1]
+    # def evaluate(ops: List[str]) -> int:
+    #     # Evaluate strictly left-to-right
+    #     result = numbers[0]
+    #     for i, op in enumerate(ops):
+    #         if op == '+':
+    #             result += numbers[i + 1]
+    #         else:  # op == '*'
+    #             result *= numbers[i + 1]
             
-        return result
-=======
->>>>>>> parent of c699797 (refactor: Simplify number operations by using binary operator generation)
+    #     return result
     
     for i in range(1, len(numbers)):
         left = numbers[:i]
