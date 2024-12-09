@@ -26,6 +26,10 @@ def calculate_extended_antinodes(pos1: Tuple[int, int], pos2: Tuple[int, int], g
     dy = y2 - y1
     dx = x2 - x1
     
+    # If both positions are the same, return empty list
+    if dy == 0 and dx == 0:
+        return []
+    
     antinodes = []
     
     # Start from the first position and go backwards
