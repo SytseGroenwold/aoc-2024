@@ -27,38 +27,29 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     for file_id, length in blocks:
         flat.extend([file_id] * length)
     
-    print(f"Initial disk state: {flat}")
-    moves = 0
-    
-    # Keep moving files until all empty spaces are at the end
-    while True:
-        # Check if all empty spaces are at the end
-        first_space = -1
-        for i, cell in enumerate(flat):
-            if cell == '.':
-                first_space = i
-                break
-                
-        if first_space == -1 or all(cell == '.' for cell in flat[first_space:]):
-            print(f"Finished after {moves} moves - all spaces at end")
+    # Find first empty space
+    space_pos = 0
+    while space_pos < len(flat) and flat[space_pos] != '.':
+        space_pos += 1
+        
+    # Keep moving files until all spaces are at the end
+    while space_pos < len(flat):
+        # Find rightmost file after this space
+        file_pos = len(flat) - 1
+        while file_pos > space_pos and flat[file_pos] == '.':
+            file_pos -= 1
+            
+        if file_pos <= space_pos:
             break
             
-        # Find rightmost file after the first space
-        moved = False
-        for i in range(len(flat)-1, first_space-1, -1):
-            if flat[i] != '.':  # Found a file block
-                # Move it to the first space
-                print(f"Moving file {flat[i]} from position {i} to position {first_space}")
-                flat[first_space] = flat[i]
-                flat[i] = '.'
-                moved = True
-                moves += 1
-                print(f"Disk state after move {moves}: {flat}")
-                break
-                
-        if not moved:
-            print(f"Finished after {moves} moves - no more moves possible")
-            break
+        # Move the file to the empty space
+        flat[space_pos] = flat[file_pos]
+        flat[file_pos] = '.'
+        
+        # Find next empty space
+        space_pos += 1
+        while space_pos < len(flat) and flat[space_pos] != '.':
+            space_pos += 1
     
     return flat
 
