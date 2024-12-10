@@ -27,7 +27,7 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     for file_id, length in blocks:
         flat.extend([file_id] * length)
     
-    # Get list of file blocks with their sizes
+    # Get list of file blocks with their sizes and positions
     file_blocks = []
     pos = 0
     while pos < len(flat):
@@ -40,59 +40,30 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
         else:
             pos += 1
     
-    # Get list of empty spaces with their sizes
-    spaces = []
-    pos = 0
-    while pos < len(flat):
-        if flat[pos] == '.':
-            start = pos
-            while pos < len(flat) and flat[pos] == '.':
+    # Sort file blocks by ID in descending order
+    file_blocks.sort(reverse=True)
+    
+    # Process each file block
+    for file_id, start, size in file_blocks:
+        # Find all empty spaces to the left of this file
+        spaces = []
+        pos = 0
+        while pos < start:
+            if flat[pos] == '.':
+                space_start = pos
+                while pos < start and flat[pos] == '.':
+                    pos += 1
+                spaces.append((space_start, pos - space_start))
+            else:
                 pos += 1
-            spaces.append((start, pos - start))
-        else:
-            pos += 1
-    
-    def try_arrangement(arrangement, remaining_blocks, remaining_spaces, current_flat):
-        if not remaining_blocks:
-            checksum = sum(pos * file_id 
-                         for pos, file_id in enumerate(current_flat) 
-                         if file_id != '.')
-            return checksum, current_flat
         
-        best_checksum = float('inf')
-        best_flat = None
-        
-        for i, (file_id, _, size) in enumerate(remaining_blocks):
-            for j, (space_start, space_size) in enumerate(remaining_spaces):
-                if size <= space_size:
-                    # Try placing this block in this space
-                    new_flat = current_flat.copy()
-                    # Clear original position
-                    orig_start = arrangement[i][1]
-                    new_flat[orig_start:orig_start + size] = ['.'] * size
-                    # Place in new position
-                    new_flat[space_start:space_start + size] = [file_id] * size
-                    
-                    # Split remaining space if needed
-                    new_spaces = remaining_spaces.copy()
-                    new_spaces.pop(j)
-                    if space_size > size:
-                        new_spaces.append((space_start + size, space_size - size))
-                    
-                    # Recurse with remaining blocks
-                    new_blocks = remaining_blocks.copy()
-                    new_blocks.pop(i)
-                    checksum, result = try_arrangement(arrangement, new_blocks, new_spaces, new_flat)
-                    
-                    if checksum < best_checksum:
-                        best_checksum = checksum
-                        best_flat = result
-        
-        return best_checksum, best_flat
-    
-    # Try all possible arrangements
-    checksum, result = try_arrangement(file_blocks, file_blocks.copy(), spaces, flat.copy())
-    return result if result is not None else flat
+        # Find leftmost space that can fit this file
+        for space_start, space_size in spaces:
+            if space_size >= size:
+                # Move the file to this space
+                flat[start:start + size] = ['.'] * size  # Clear original position
+                flat[space_start:space_start + size] = [file_id] * size  # Place in new position
+                break
     
     return flat
 
