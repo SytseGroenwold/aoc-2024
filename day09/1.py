@@ -30,27 +30,34 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     print(f"Initial disk state: {flat}")
     moves = 0
     
-    # Keep moving files until no more moves are possible
+    # Keep moving files until all empty spaces are at the end
     while True:
+        # Check if all empty spaces are at the end
+        first_space = -1
+        for i, cell in enumerate(flat):
+            if cell == '.':
+                first_space = i
+                break
+                
+        if first_space == -1 or all(cell == '.' for cell in flat[first_space:]):
+            print(f"Finished after {moves} moves - all spaces at end")
+            break
+            
+        # Find rightmost file after the first space
         moved = False
-        # Find rightmost file
-        for i in range(len(flat)-1, -1, -1):
+        for i in range(len(flat)-1, first_space-1, -1):
             if flat[i] != '.':  # Found a file block
-                # Find leftmost free space
-                for j in range(len(flat)):
-                    if flat[j] == '.':  # Found free space
-                        # Move the file block
-                        print(f"Moving file {flat[i]} from position {i} to position {j}")
-                        flat[j] = flat[i]
-                        flat[i] = '.'
-                        moved = True
-                        moves += 1
-                        print(f"Disk state after move {moves}: {flat}")
-                        break
-                if moved:
-                    break
+                # Move it to the first space
+                print(f"Moving file {flat[i]} from position {i} to position {first_space}")
+                flat[first_space] = flat[i]
+                flat[i] = '.'
+                moved = True
+                moves += 1
+                print(f"Disk state after move {moves}: {flat}")
+                break
+                
         if not moved:
-            print(f"Finished after {moves} moves")
+            print(f"Finished after {moves} moves - no more moves possible")
             break
     
     return flat
