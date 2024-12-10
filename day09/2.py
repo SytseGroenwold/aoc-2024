@@ -1,3 +1,9 @@
+# PROMPT:
+# > lets make a new file named 2.py and do something similar. The difference now is that entire blocks of numbers  need to be moved at once instead of the individual numbers. Do note that the blocks need to be able to fit inside the empty space
+# and that the final state does not end with all the numbers first and empty spaces only at the end. The final checksum is calculated in the same way as well, but whenever there is an empty space, you can just skip it
+# > I think I missed sharing some critical info:"This time, attempt to move whole files to the leftmost span of free space blocks that could fit the file. Attempt to move each file exactly once in order of decreasing file ID number starting wit
+# h the file with the highest file ID number. If there is no span of free space to the left of a file that is large enough to fit the file, the file does not move."
+
 import sys
 from typing import List, Tuple
 
