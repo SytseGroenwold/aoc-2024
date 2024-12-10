@@ -16,13 +16,13 @@ def create_block_representation(lengths: List[int]) -> List[Tuple[int, int]]:
             blocks.append((file_id, length))
             file_id += 1
         else:  # Free space
-            blocks.append((0, length))  # 0 represents free space
+            blocks.append(('.', length))  # '.' represents free space
             
     return blocks
 
 def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     """Compact the disk by moving files from right to left."""
-    # Convert blocks to flat representation where each number is file ID (-1 for space)
+    # Convert blocks to flat representation where each number is file ID ('.' for space)
     flat = []
     for file_id, length in blocks:
         flat.extend([file_id] * length)
@@ -35,14 +35,14 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
         moved = False
         # Find rightmost file
         for i in range(len(flat)-1, -1, -1):
-            if flat[i] > 0:  # Found a file block
+            if flat[i] != '.':  # Found a file block
                 # Find leftmost free space
                 for j in range(len(flat)):
-                    if flat[j] == 0:  # Found free space
+                    if flat[j] == '.':  # Found free space
                         # Move the file block
                         print(f"Moving file {flat[i]} from position {i} to position {j}")
                         flat[j] = flat[i]
-                        flat[i] = 0
+                        flat[i] = '.'
                         moved = True
                         moves += 1
                         print(f"Disk state after move {moves}: {flat}")
@@ -59,7 +59,7 @@ def calculate_checksum(flat_disk: List[int]) -> int:
     """Calculate checksum by multiplying position by file ID for all file blocks."""
     return sum(pos * file_id 
               for pos, file_id in enumerate(flat_disk) 
-              if file_id > 0)
+              if file_id != '.')
 
 def main():
     if len(sys.argv) != 2:
