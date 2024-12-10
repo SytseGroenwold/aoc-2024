@@ -27,40 +27,48 @@ def compact_disk(blocks: List[Tuple[int, int]]) -> List[int]:
     for file_id, length in blocks:
         flat.extend([file_id] * length)
     
-    pos = 0
-    while pos < len(flat):
-        if flat[pos] == '.':  # Found an empty space
-            # Get size of current empty block
-            space_size = 0
-            space_start = pos
-            while pos < len(flat) and flat[pos] == '.':
-                space_size += 1
+    changed = True
+    while changed:
+        changed = False
+        pos = 0
+        while pos < len(flat):
+            if flat[pos] == '.':  # Found an empty space
+                # Get size of current empty block
+                space_size = 0
+                space_start = pos
+                while pos < len(flat) and flat[pos] == '.':
+                    space_size += 1
+                    pos += 1
+                
+                # Look for the largest file block that fits
+                best_size = 0
+                best_start = -1
+                best_end = -1
+                
+                scan_pos = pos
+                while scan_pos < len(flat):
+                    if flat[scan_pos] != '.':
+                        block_start = scan_pos
+                        file_id = flat[scan_pos]
+                        while scan_pos < len(flat) and flat[scan_pos] == file_id:
+                            scan_pos += 1
+                        block_size = scan_pos - block_start
+                        
+                        if block_size <= space_size and block_size > best_size:
+                            best_size = block_size
+                            best_start = block_start
+                            best_end = scan_pos
+                    else:
+                        scan_pos += 1
+                
+                # If we found a block that fits, move it
+                if best_size > 0:
+                    file_id = flat[best_start]
+                    flat[space_start:space_start+best_size] = [file_id] * best_size
+                    flat[best_start:best_end] = ['.'] * best_size
+                    changed = True
+            else:
                 pos += 1
-                
-            # Look for the rightmost file block that fits
-            scan_pos = len(flat) - 1
-            while scan_pos > pos:
-                # Find end of current block
-                block_end = scan_pos
-                while scan_pos > 0 and flat[scan_pos-1] == flat[block_end]:
-                    scan_pos -= 1
-                block_start = scan_pos
-                block_size = block_end - block_start + 1
-                
-                # If this block fits in the space, move it
-                if block_size <= space_size:
-                    # Move the block
-                    file_id = flat[block_start]
-                    flat[space_start:space_start+block_size] = [file_id] * block_size
-                    flat[block_start:block_end+1] = ['.'] * block_size
-                    break
-                
-                # Move to next block
-                scan_pos = block_start - 1
-                while scan_pos > 0 and flat[scan_pos] == '.':
-                    scan_pos -= 1
-        else:
-            pos += 1
     
     return flat
 
